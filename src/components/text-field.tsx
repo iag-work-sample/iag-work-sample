@@ -1,5 +1,4 @@
 import React from "react";
-import { type } from "os";
 
 type TextProps = {
   value?: string | null;
@@ -20,13 +19,10 @@ export default function TextField(props: Props) {
     const rawValue = event.target.value;
     const value = rawValue && rawValue != "" ? rawValue : null;
 
-    if (props.type === "text" || value === null) {
+    if (props.type === "text" || props.type === "date" || value === null) {
       (props as TextProps).onChange(value);
     } else if (props.type === "number") {
       props.onChange(Number.parseInt(value));
-    } else if (props.type === "date") {
-      //TODO;
-      throw new Error("TODO");
     }
   };
 
