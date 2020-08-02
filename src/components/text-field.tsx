@@ -111,6 +111,7 @@ export default React.forwardRef(function TextField(
         value={props.value || ""}
         name={props.name}
         onChange={onChange}
+        data-testid={props.name}
       />
       {props.placeholder && (
         <Placeholder inputValue={props.value?.toString()}>

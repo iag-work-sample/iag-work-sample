@@ -32,7 +32,7 @@ export default function Button({
   className,
 }: Props) {
   return (
-    <StyledButton type={type} className={className}>
+    <StyledButton type={type} className={className} role="submit">
       {children}
     </StyledButton>
   );
