@@ -94,7 +94,7 @@ export default React.forwardRef(function TextField(
 ) {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = event.target.value;
-    const value = rawValue && rawValue != "" ? rawValue : null;
+    const value = rawValue && rawValue !== "" ? rawValue : null;
 
     if (props.type === "text" || props.type === "date" || value === null) {
       (props as TextProps).onChange(value);

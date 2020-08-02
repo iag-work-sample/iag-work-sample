@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAsyncCallback, useAsync } from "react-async-hook";
+import { useAsyncCallback } from "react-async-hook";
 import moment from "moment";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
@@ -31,23 +31,28 @@ export default function Form() {
   const [name, setName] = useState<string | null>(null);
   const [salary, setSalary] = useState<number | null>(null);
   const [dob, setDob] = useState<string | null>(null);
-  const { register, handleSubmit, watch, errors } = useForm();
+  const [previousIdNumber, setPreviousIdNumber] = useState<number | null>(null);
+  const { register, handleSubmit, errors } = useForm();
 
   const create = async () => {
     if (!name || !salary || !dob) {
       throw new Error("Cannot create a user without a name, salary and dob");
     }
 
-    await createEmployee({ name, salary, dob: moment(dob) });
+    return await createEmployee({ name, salary, dob: moment(dob) });
   };
 
   const asyncCreate = useAsyncCallback(create);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    // event.preventDefault();
+  const onSubmit = async () => {
+    setPreviousIdNumber(null);
 
-    asyncCreate.execute();
+    const result = await asyncCreate.execute();
+
+    setName(null);
+    setSalary(null);
+    setDob(null);
+    setPreviousIdNumber(result.id);
   };
 
   return (
@@ -58,6 +63,9 @@ export default function Form() {
       ) : (
         <>
           {" "}
+          {previousIdNumber !== null && (
+            <p>User created! ID was {previousIdNumber}</p>
+          )}
           {errors.name && <ErrorMessage>Name is required</ErrorMessage>}
           <StyledTextField
             name="name"
