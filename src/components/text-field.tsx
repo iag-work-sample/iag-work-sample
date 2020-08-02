@@ -6,6 +6,7 @@ import { PRIMARY_COLOR } from "../constants";
 type CommonProps = {
   placeholder?: string;
   className?: string;
+  name?: string;
 };
 
 type TextProps = CommonProps & {
@@ -87,7 +88,10 @@ const Placeholder = styled.label<PlaceholderProps>`
   transition: all 200ms ease;
 `;
 
-export default function TextField(props: Props) {
+export default React.forwardRef(function TextField(
+  props: Props,
+  ref: React.Ref<HTMLInputElement>
+) {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = event.target.value;
     const value = rawValue && rawValue != "" ? rawValue : null;
@@ -101,7 +105,13 @@ export default function TextField(props: Props) {
 
   return (
     <Root className={props.className}>
-      <Input type="text" value={props.value || ""} onChange={onChange} />
+      <Input
+        ref={ref}
+        type="text"
+        value={props.value || ""}
+        name={props.name}
+        onChange={onChange}
+      />
       {props.placeholder && (
         <Placeholder inputValue={props.value?.toString()}>
           {props.placeholder}
@@ -110,4 +120,4 @@ export default function TextField(props: Props) {
       <Ripple />
     </Root>
   );
-}
+});
