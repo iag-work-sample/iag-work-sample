@@ -4,22 +4,22 @@ import moment from "moment";
 import styled from "styled-components";
 
 import TextField from "../components/text-field";
+import Button from "../components/button";
 import createEmployee from "../api/create-employee";
 
 const FormElement = styled.form`
-  // display: flex;
-  // flex-direction: column;
   padding: 0.5rem;
   max-width: 30rem;
   margin: 0 auto;
+  text-align: center;
 `;
 
 const StyledTextField = styled(TextField)`
   margin: 0.5rem 0;
 `;
 
-const SubmitButton = styled.button`
-  margin: 0.25rem 0;
+const SubmitButton = styled(Button)`
+  margin: 0.5rem 0;
 `;
 
 export default function Form() {
@@ -45,28 +45,34 @@ export default function Form() {
 
   return (
     <FormElement onSubmit={onSubmit}>
-      {asyncCreate.loading && "Loading..."}
-      {asyncCreate.error && asyncCreate.error.message}
-      IAG Form
-      <StyledTextField
-        value={name}
-        onChange={setName}
-        type="text"
-        placeholder="Name"
-      />
-      <StyledTextField
-        value={salary}
-        type="number"
-        onChange={setSalary}
-        placeholder="Salary"
-      />
-      <StyledTextField
-        value={dob}
-        onChange={setDob}
-        type="date"
-        placeholder="Date of Birth"
-      />
-      <SubmitButton type="submit">Submit</SubmitButton>
+      <h1>IAG Form</h1>
+      {asyncCreate.loading ? (
+        "Submitting..."
+      ) : (
+        <>
+          {" "}
+          <StyledTextField
+            value={name}
+            onChange={setName}
+            type="text"
+            placeholder="Name"
+          />
+          <StyledTextField
+            value={salary}
+            type="number"
+            onChange={setSalary}
+            placeholder="Salary"
+          />
+          <StyledTextField
+            value={dob}
+            onChange={setDob}
+            type="date"
+            placeholder="Date of Birth"
+          />
+          {asyncCreate.error && asyncCreate.error.message}
+          <SubmitButton type="submit">Submit</SubmitButton>
+        </>
+      )}
     </FormElement>
   );
 }

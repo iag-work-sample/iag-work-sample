@@ -1,7 +1,6 @@
 import moment from "moment";
 
 import User from "../model/user";
-import { resolve } from "dns";
 
 /** User as expected by the API */
 interface ApiUser {
@@ -27,7 +26,7 @@ export default async function createEmployeeStub(
         ...processUserForApi(user),
         id: Math.round(Math.random() * 1000),
       });
-    }, 500);
+    }, 1000);
   });
 }
 

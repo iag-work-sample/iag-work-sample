@@ -1,6 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
+import { PRIMARY_COLOR } from "../constants";
 
 type CommonProps = {
   placeholder?: string;
@@ -21,18 +22,13 @@ type NumberProps = CommonProps & {
 
 type Props = TextProps | NumberProps;
 
-const PRIMARY_COLOR = "#6200ee;";
-
 const Root = styled.div`
-  // display: inline-block;
   background: #f8f8f8;
-  // padding: 1rem;
   position: relative;
 
   border-bottom: 1px solid #ccc;
 
   &:focus-within {
-    // border-bottom: none;
     background: #dddddd;
   }
 
