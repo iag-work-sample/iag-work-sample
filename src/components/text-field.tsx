@@ -6,7 +6,7 @@ import { PRIMARY_COLOR } from "../constants";
 type CommonProps = {
   placeholder?: string;
   className?: string;
-  name?: string;
+  name: string;
 };
 
 type TextProps = CommonProps & {
@@ -42,6 +42,7 @@ const Input = styled.input`
   height: 100%;
   width: 100%;
   margin: 1.5rem 1rem 0.75rem 1rem;
+  outline: none;
 `;
 
 const Ripple = styled.div`
@@ -50,10 +51,10 @@ const Ripple = styled.div`
   left: 0;
   right: 0;
   border-bottom: 2px solid ${PRIMARY_COLOR};
-  scale: 0;
+  transform: scale(0);
 
   ${Root}:focus-within & {
-    scale: 1;
+    transform: scale(1);
   }
 
   transition: all 200ms ease;
@@ -61,11 +62,11 @@ const Ripple = styled.div`
 
 interface PlaceholderProps {
   inputValue?: string;
+  for?: string;
 }
 
 const selectedPlaceholderCss = `
-  scale: 0.5;
-  transform: translateY(-100%);
+  transform: scale(0.5) translateY(-100%);
 `;
 
 const Placeholder = styled.label<PlaceholderProps>`
@@ -113,11 +114,12 @@ export default React.forwardRef(function TextField(
         type="text"
         value={props.value || ""}
         name={props.name}
+        id={props.name}
         onChange={onChange}
         data-testid={props.name}
       />
       {props.placeholder && (
-        <Placeholder inputValue={props.value?.toString()}>
+        <Placeholder inputValue={props.value?.toString()} for={props.name}>
           {props.placeholder}
         </Placeholder>
       )}
