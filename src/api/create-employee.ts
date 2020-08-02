@@ -1,9 +1,9 @@
 import moment from "moment";
 
-import User from "../model/user";
+import Employee from "../model/employee";
 
-/** User as expected by the API */
-interface ApiUser {
+/** Employee as expected by the API */
+interface ApiEmployee {
   // Note: Representing everything as a string is weird, but according to the
   // doc at http://dummy.restapiexample.com/create this is how it's supposed
   // to work
@@ -13,43 +13,57 @@ interface ApiUser {
   age: string;
 }
 
-type ApiResponseData = ApiUser & { id: number };
+type ApiResponseData = ApiEmployee & { id: number };
 
 // This is stubbed because I can't make an AJAX call to restexample.com, as it
 // doesn't support CORS. Please find the code to do that below
+
+/**
+ * Creates a new employee in the dummy restexample api, returning its details.
+ *
+ * @param employee The employee to create.
+ */
 export default async function createEmployeeStub(
-  user: User
+  employee: Employee
 ): Promise<ApiResponseData> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        ...processUserForApi(user),
+        ...processEmployeeForApi(employee),
         id: Math.round(Math.random() * 1000),
       });
     }, 1000);
   });
 }
 
-async function createEmployee(user: User): Promise<ApiResponseData> {
+/**
+ * Creates a new employee in the dummy restexample api, returning its details.
+ *
+ * @param employee The employee to create.
+ */
+async function createEmployee(employee: Employee): Promise<ApiResponseData> {
   const res = await fetch("http://dummy.restexample.com/api/v1/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(processUserForApi(user)),
+    body: JSON.stringify(processEmployeeForApi(employee)),
   });
 
   if (!res.ok) {
-    throw new Error("Failed to submit new user");
+    throw new Error("Failed to submit new employee");
   } else {
     return (await res.json()).data;
   }
 }
 
-function processUserForApi(user: User): ApiUser {
+/**
+ * Transforms a {@link Employee} into a format fit for passing to the API.
+ */
+function processEmployeeForApi(employee: Employee): ApiEmployee {
   return {
-    name: user.name,
-    salary: user.salary.toString(),
-    age: Math.abs(user.dob.diff(moment(), "years")).toString(),
+    name: employee.name,
+    salary: employee.salary.toString(),
+    age: Math.abs(employee.dob.diff(moment(), "years")).toString(),
   };
 }

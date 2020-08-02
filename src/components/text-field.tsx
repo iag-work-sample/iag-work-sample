@@ -88,6 +88,9 @@ const Placeholder = styled.label<PlaceholderProps>`
   transition: all 200ms ease;
 `;
 
+/**
+ * A material-ui-styled text field.
+ */
 export default React.forwardRef(function TextField(
   props: Props,
   ref: React.Ref<HTMLInputElement>

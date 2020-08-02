@@ -27,6 +27,9 @@ const ErrorMessage = styled.div`
   color: #f00;
 `;
 
+/**
+ * A simple form that collects and submits details about an Employee
+ */
 export default function Form() {
   const [name, setName] = useState<string | null>(null);
   const [salary, setSalary] = useState<number | null>(null);
@@ -36,7 +39,9 @@ export default function Form() {
 
   const create = async () => {
     if (!name || !salary || !dob) {
-      throw new Error("Cannot create a user without a name, salary and dob");
+      throw new Error(
+        "Cannot create an employee without a name, salary and dob"
+      );
     }
 
     return await createEmployee({ name, salary, dob: moment(dob) });
@@ -64,7 +69,7 @@ export default function Form() {
         <>
           {" "}
           {previousIdNumber !== null && (
-            <p>User created! ID was {previousIdNumber}</p>
+            <p>Employee created! ID was {previousIdNumber}</p>
           )}
           {errors.name && <ErrorMessage>Name is required</ErrorMessage>}
           <StyledTextField

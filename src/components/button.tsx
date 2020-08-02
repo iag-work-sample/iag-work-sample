@@ -26,6 +26,9 @@ interface Props {
   className?: string;
 }
 
+/**
+ * Simple styled button component, that wraps around a <button>
+ */
 export default function Button({
   children,
   type = "submit",
